@@ -1,8 +1,16 @@
-import { Controller, Post, Body, Res, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Req,
+  Res,
+  BadRequestException
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 @Controller('api')
 export class UsersController {
@@ -49,5 +57,13 @@ export class UsersController {
     return {
       message: 'success',
     };
+  }
+
+  @Get('user')
+  async user(
+    @Req() request: Request,
+  ) {
+    const cookie = request.cookies['jwt'];
+    return cookie;
   }
 }
