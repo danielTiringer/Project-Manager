@@ -1,7 +1,8 @@
-import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Body, Res, BadRequestException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { Response } from 'express';
 
 @Controller('api')
 export class UsersController {
@@ -29,6 +30,7 @@ export class UsersController {
   async login(
     @Body('email') email: string,
     @Body('password') password: string,
+    @Res({ passthrough: true }) response: Response,
   ) {
     const user = await this.usersService.findOne({ email });
 
@@ -42,6 +44,10 @@ export class UsersController {
 
     const jwt = await this.jwtService.signAsync({ id: user.id });
 
-    return jwt;
+    response.cookie('jwt', jwt, { httpOnly: true });
+
+    return {
+      message: 'success',
+    };
   }
 }
