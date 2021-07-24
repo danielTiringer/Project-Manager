@@ -1,6 +1,8 @@
-# NestJS development environment
+# Project manager
 
-Dockerized development environment for NestJS
+A pet project to play around with syncing up a site made of multiple small services.
+
+[![Build Status](https://cloud.drone.io/api/badges/danielTiringer/Project-Manager/status.svg)](https://cloud.drone.io/danielTiringer/Project-Manager)
 
 ## Usage
 
