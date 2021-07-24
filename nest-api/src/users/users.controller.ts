@@ -7,6 +7,7 @@ import {
   Res,
   BadRequestException,
   UnauthorizedException,
+  ConflictException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
@@ -27,6 +28,12 @@ export class UsersController {
     @Body('password') password: string,
   ) {
     const hashedPassword = await bcrypt.hash(password, 12);
+
+    const check = await this.usersService.findOne({ email });
+
+    if (check) {
+      throw new ConflictException('Email address already exists');
+    }
 
     const user = await this.usersService.create({
       name,
