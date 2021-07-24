@@ -71,6 +71,20 @@ services:
     networks:
       - project-manager
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: ${PROJECT_NAME}-Admin
+    environment:
+      PMA_HOST: database
+    depends_on:
+      - database
+    links:
+      - database
+    ports:
+      - '3010:80'
+    networks:
+      - project-manager
+
 
 networks:
   project-manager:
