@@ -1,0 +1,17 @@
+kind: pipeline
+name: nest-api
+
+steps:
+- name: lint
+  image: node:16
+  commands:
+  - cd nest-api
+  - yarn install
+  - yarn run lint
+
+- name: test
+  image: node:16
+  commands:
+  - cd nest-api
+  - yarn install
+  - yarn run test
