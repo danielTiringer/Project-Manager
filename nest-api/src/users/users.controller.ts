@@ -27,11 +27,15 @@ export class UsersController {
   ) {
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    return this.usersService.create({
+    const user = await this.usersService.create({
       name,
       email,
       password: hashedPassword,
     });
+
+    delete user.password;
+
+    return user;
   }
 
   @Post('login')
