@@ -6,6 +6,7 @@ import {
   Req,
   Res,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
@@ -65,7 +66,22 @@ export class UsersController {
 
   @Get('user')
   async user(@Req() request: Request) {
-    const cookie = request.cookies['jwt'];
-    return cookie;
+    try {
+      const cookie = request.cookies['jwt'];
+
+      const data = await this.jwtService.verifyAsync(cookie);
+
+      if (!data) {
+        throw new UnauthorizedException();
+      }
+
+      const user = await this.usersService.findOne({ id: data['id'] });
+
+      delete user.password;
+
+      return user;
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
   }
 }
