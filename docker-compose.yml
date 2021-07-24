@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  yarn:
+    container_name: ${PROJECT_NAME}-Yarn
+    build:
+      context: ./nest-api
+      dockerfile: ../docker/node/Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+      target: yarn
+    env_file: .env
+    entrypoint: yarn
+    volumes:
+      - ./nest-api:/src
+    networks:
+      - project-manager
+
+  nest:
+    container_name: ${PROJECT_NAME}-Nest
+    build:
+      context: ./nest-api
+      dockerfile: ../docker/node/Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+      target: nest
+    env_file: .env
+    entrypoint: nest
+    volumes:
+      - ./nest-api:/src
+    networks:
+      - project-manager
+
+  dev:
+    container_name: ${PROJECT_NAME}-Nest-Dev-Server
+    build:
+      context: ./nest-api
+      dockerfile: ../docker/node/Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+      target: yarn
+    env_file: .env
+    depends_on:
+      - database
+    links:
+      - database
+    ports:
+      - 3000:3000
+    entrypoint: yarn
+    command: run start:dev
+    volumes:
+      - ./nest-api:/src
+    networks:
+      - project-manager
+
+  database:
+    image: mysql:8
+    container_name: ${PROJECT_NAME}-Database
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - project-manager-data:/var/lib/mysql
+    networks:
+      - project-manager
+
+
+networks:
+  project-manager:
+
+volumes:
+  project-manager-data:
