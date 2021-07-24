@@ -1,10 +1,14 @@
 import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('api')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
   @Post('register')
   async register(
@@ -36,6 +40,8 @@ export class UsersController {
       throw new BadRequestException('Invalid credentials');
     }
 
-    return user;
+    const jwt = await this.jwtService.signAsync({ id: user.id });
+
+    return jwt;
   }
 }
