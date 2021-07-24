@@ -45,7 +45,7 @@ services:
     links:
       - database
     ports:
-      - 3000:3000
+      - ${API_PORT}:${API_PORT}
     entrypoint: yarn
     command: run start:dev
     volumes:
