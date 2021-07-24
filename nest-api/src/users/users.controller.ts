@@ -5,7 +5,7 @@ import {
   Body,
   Req,
   Res,
-  BadRequestException
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
@@ -60,9 +60,7 @@ export class UsersController {
   }
 
   @Get('user')
-  async user(
-    @Req() request: Request,
-  ) {
+  async user(@Req() request: Request) {
     const cookie = request.cookies['jwt'];
     return cookie;
   }
