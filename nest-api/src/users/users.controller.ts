@@ -29,9 +29,11 @@ export class UsersController {
   ) {
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const check = await this.usersService.findOne({ email });
+    const checkIfEmailIsAlreadyRegistered = await this.usersService.findOne({
+      email,
+    });
 
-    if (check) {
+    if (checkIfEmailIsAlreadyRegistered) {
       throw new ConflictException('Email address already exists');
     }
 
