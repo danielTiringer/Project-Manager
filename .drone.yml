@@ -11,9 +11,11 @@ steps:
 - name: lint
   image: node:16-alpine
   commands:
+  - cd nest-api
   - yarn run lint
 
 - name: test
   image: node:16-alpine
   commands:
+  - cd nest-api
   - yarn run test
