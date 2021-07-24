@@ -73,6 +73,15 @@ export class UsersController {
     };
   }
 
+  @Post('logout')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('jwt');
+
+    return {
+      message: 'success',
+    };
+  }
+
   @Get('user')
   async user(@Req() request: Request) {
     try {
