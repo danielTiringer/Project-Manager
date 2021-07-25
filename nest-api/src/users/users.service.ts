@@ -10,7 +10,7 @@ export class UsersService {
   ) {}
 
   async findOne(condition: any): Promise<User> {
-    return this.userRepository.findOne(condition);
+    return this.userRepository.findOneOrFail(condition);
   }
 
   async create(data: any): Promise<User> {

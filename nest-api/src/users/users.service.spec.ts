@@ -22,7 +22,7 @@ describe('UsersService', () => {
         {
           provide: getRepositoryToken(User),
           useValue: {
-            findOne: jest.fn().mockResolvedValue(oneUser),
+            findOneOrFail: jest.fn().mockResolvedValue(oneUser),
             save: jest.fn().mockResolvedValue(oneUser),
             update: jest.fn().mockResolvedValue(true),
             delete: jest.fn().mockResolvedValue(true),
@@ -39,9 +39,9 @@ describe('UsersService', () => {
     expect(usersService).toBeDefined();
   });
 
-  describe('findOne', () => {
+  describe('findOneOrFail', () => {
     it('should get a single user', () => {
-      const repositorySpy = jest.spyOn(repository, 'findOne');
+      const repositorySpy = jest.spyOn(repository, 'findOneOrFail');
       expect(
         usersService.findOne({ email: 'test@example.com' }),
       ).resolves.toEqual(oneUser);
