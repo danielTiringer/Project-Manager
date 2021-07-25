@@ -7,6 +7,7 @@ import { UsersService } from './users.service';
 const testName = 'Test User';
 const testEmail = 'test@example.com';
 const testPassword = 'password';
+const testErrorMessage = 'Test Error Message';
 
 const oneUser = new User(testName, testEmail, testPassword);
 
@@ -87,6 +88,17 @@ describe('UsersService', () => {
   describe('delete', () => {
     it('should return { deleted: true } if successful', () => {
       expect(usersService.delete(1)).resolves.toEqual({ deleted: true });
+    });
+    it('should return { deleted: flase, message: error.message } if fails', () => {
+      const repositorySpy = jest
+        .spyOn(repository, 'delete')
+        .mockRejectedValueOnce(new Error(testErrorMessage));
+      expect(usersService.delete(1)).resolves.toEqual({
+        deleted: false,
+        message: testErrorMessage,
+      });
+      expect(repositorySpy).toBeCalledWith({ id: 1 });
+      expect(repositorySpy).toBeCalledTimes(1);
     });
   });
 });
