@@ -45,4 +45,16 @@ describe('UsersService', () => {
       expect(repositorySpy).toBeCalledWith({ email: 'test@example.com' });
     });
   });
+
+  describe('create', () => {
+    it('should successfully insert a user', () => {
+      expect(
+        usersService.create({
+          name: testName,
+          email: testEmail,
+          password: testPassword,
+        }),
+      ).resolves.toEqual(oneUser);
+    });
+  });
 });
