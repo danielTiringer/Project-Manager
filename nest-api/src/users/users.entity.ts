@@ -28,4 +28,10 @@ export class User {
 
   @UpdateDateColumn({ select: false })
   updated_at: Date;
+
+  constructor(name: string, email: string, password: string) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+  }
 }
