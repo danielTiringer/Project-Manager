@@ -4,7 +4,11 @@ import { Repository } from 'typeorm';
 import { User } from './users.entity';
 import { UsersService } from './users.service';
 
-const oneUser = new User('Test User', 'test@example.com', 'password');
+const testName = 'Test User';
+const testEmail = 'test@example.com';
+const testPassword = 'password';
+
+const oneUser = new User(testName, testEmail, testPassword);
 
 describe('UsersService', () => {
   let usersService: UsersService;
