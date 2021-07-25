@@ -16,4 +16,10 @@ export class UsersService {
   async create(data: any): Promise<User> {
     return this.userRepository.save(data);
   }
+
+  async update(user: User): Promise<User> {
+    const { id } = user;
+    await this.userRepository.update({ id }, user);
+    return this.findOne(id);
+  }
 }

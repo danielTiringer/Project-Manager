@@ -23,6 +23,7 @@ describe('UsersService', () => {
           useValue: {
             findOne: jest.fn().mockResolvedValue(oneUser),
             save: jest.fn().mockResolvedValue(oneUser),
+            update: jest.fn().mockResolvedValue(oneUser),
           },
         },
       ],
@@ -62,6 +63,23 @@ describe('UsersService', () => {
         password: testPassword,
       });
       expect(repository.save).toBeCalledTimes(1);
+    });
+  });
+
+  describe('update', () => {
+    it('should successfully update a user', async () => {
+      const user = await usersService.update({
+        id: 1,
+        name: testName,
+        email: testEmail,
+        password: testPassword,
+      });
+      expect(user).toEqual(oneUser);
+      expect(repository.update).toBeCalledTimes(1);
+      expect(repository.update).toBeCalledWith(
+        { id: 1 },
+        { name: testName, email: testEmail, password: testPassword, id: 1 },
+      );
     });
   });
 });
