@@ -1,8 +1,8 @@
 # Project manager
 
-A pet project to play around with syncing up a site made of multiple small services.
-
 [![Build Status](https://cloud.drone.io/api/badges/danielTiringer/Project-Manager/status.svg)](https://cloud.drone.io/danielTiringer/Project-Manager)
+
+A pet project to play around with syncing up a site made of multiple small services.
 
 ## Usage
 
