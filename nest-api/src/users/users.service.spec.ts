@@ -22,7 +22,7 @@ describe('UsersService', () => {
           provide: getRepositoryToken(User),
           useValue: {
             findOne: jest.fn().mockResolvedValue(oneUser),
-            create: jest.fn().mockResolvedValue(oneUser),
+            save: jest.fn().mockResolvedValue(oneUser),
           },
         },
       ],
