@@ -55,6 +55,13 @@ describe('UsersService', () => {
           password: testPassword,
         }),
       ).resolves.toEqual(oneUser);
+      expect(repository.save).toBeCalledTimes(1);
+      expect(repository.save).toBeCalledWith({
+        name: testName,
+        email: testEmail,
+        password: testPassword,
+      });
+      expect(repository.save).toBeCalledTimes(1);
     });
   });
 });
