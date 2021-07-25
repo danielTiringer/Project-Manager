@@ -23,7 +23,8 @@ describe('UsersService', () => {
           useValue: {
             findOne: jest.fn().mockResolvedValue(oneUser),
             save: jest.fn().mockResolvedValue(oneUser),
-            update: jest.fn().mockResolvedValue(oneUser),
+            update: jest.fn().mockResolvedValue(true),
+            delete: jest.fn().mockResolvedValue(true),
           },
         },
       ],
@@ -80,6 +81,12 @@ describe('UsersService', () => {
         { id: 1 },
         { name: testName, email: testEmail, password: testPassword, id: 1 },
       );
+    });
+  });
+
+  describe('delete', () => {
+    it('should return { deleted: true } if successful', () => {
+      expect(usersService.delete(1)).resolves.toEqual({ deleted: true });
     });
   });
 });

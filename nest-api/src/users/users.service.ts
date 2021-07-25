@@ -22,4 +22,13 @@ export class UsersService {
     await this.userRepository.update({ id }, user);
     return this.findOne(id);
   }
+
+  async delete(id: number): Promise<{ deleted: boolean; message?: string }> {
+    try {
+      await this.userRepository.delete({ id });
+      return { deleted: true };
+    } catch (error) {
+      return { deleted: false, message: error.message };
+    }
+  }
 }
