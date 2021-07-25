@@ -7,5 +7,6 @@ describe('User class', () => {
     expect(user.name).toBe('Test User');
     expect(user.email).toBe('test@example.com');
     expect(user.password).toBe('password');
+    expect(user.isActive).toBe(true);
   });
 });

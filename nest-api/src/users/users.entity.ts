@@ -21,17 +21,23 @@ export class User {
   password: string;
 
   @Column({ default: true })
-  isActive: boolean;
+  isActive?: boolean;
 
   @CreateDateColumn({ select: false })
-  created_at: Date;
+  created_at?: Date;
 
   @UpdateDateColumn({ select: false })
-  updated_at: Date;
+  updated_at?: Date;
 
-  constructor(name: string, email: string, password: string) {
+  constructor(
+    name: string,
+    email: string,
+    password: string,
+    isActive?: boolean,
+  ) {
     this.name = name;
     this.email = email;
     this.password = password;
+    this.isActive = isActive || true;
   }
 }
