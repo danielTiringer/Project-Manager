@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './users.entity';
-import { UsersService } from './users.service';
+import { User } from '../models/user.entity';
+import { UserService } from './user.service';
 
 const testName = 'Test User';
 const testEmail = 'test@example.com';
@@ -11,14 +11,14 @@ const testErrorMessage = 'Test Error Message';
 
 const oneUser = new User(testName, testEmail, testPassword);
 
-describe('UsersService', () => {
-  let usersService: UsersService;
+describe('UserService', () => {
+  let userService: UserService;
   let repository: Repository<User>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        UsersService,
+        UserService,
         {
           provide: getRepositoryToken(User),
           useValue: {
@@ -31,19 +31,19 @@ describe('UsersService', () => {
       ],
     }).compile();
 
-    usersService = module.get<UsersService>(UsersService);
+    userService = module.get<UserService>(UserService);
     repository = module.get<Repository<User>>(getRepositoryToken(User));
   });
 
   it('should be defined', () => {
-    expect(usersService).toBeDefined();
+    expect(userService).toBeDefined();
   });
 
   describe('findOneOrFail', () => {
     it('should get a single user', () => {
       const repositorySpy = jest.spyOn(repository, 'findOneOrFail');
       expect(
-        usersService.findOne({ email: 'test@example.com' }),
+        userService.findOne({ email: 'test@example.com' }),
       ).resolves.toEqual(oneUser);
       expect(repositorySpy).toBeCalledWith({ email: 'test@example.com' });
     });
@@ -52,7 +52,7 @@ describe('UsersService', () => {
   describe('create', () => {
     it('should successfully insert a user', () => {
       expect(
-        usersService.create({
+        userService.create({
           name: testName,
           email: testEmail,
           password: testPassword,
@@ -70,7 +70,7 @@ describe('UsersService', () => {
 
   describe('update', () => {
     it('should successfully update a user', async () => {
-      const user = await usersService.update({
+      const user = await userService.update({
         id: 1,
         name: testName,
         email: testEmail,
@@ -87,13 +87,13 @@ describe('UsersService', () => {
 
   describe('delete', () => {
     it('should return { deleted: true } if successful', () => {
-      expect(usersService.delete(1)).resolves.toEqual({ deleted: true });
+      expect(userService.delete(1)).resolves.toEqual({ deleted: true });
     });
     it('should return { deleted: flase, message: error.message } if fails', () => {
       const repositorySpy = jest
         .spyOn(repository, 'delete')
         .mockRejectedValueOnce(new Error(testErrorMessage));
-      expect(usersService.delete(1)).resolves.toEqual({
+      expect(userService.delete(1)).resolves.toEqual({
         deleted: false,
         message: testErrorMessage,
       });

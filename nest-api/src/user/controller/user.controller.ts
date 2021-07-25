@@ -9,15 +9,15 @@ import {
   UnauthorizedException,
   ConflictException,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UserService } from '../service/user.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
 
 @Controller('api')
-export class UsersController {
+export class UserController {
   constructor(
-    private readonly usersService: UsersService,
+    private readonly userService: UserService,
     private jwtService: JwtService,
   ) {}
 
@@ -29,7 +29,7 @@ export class UsersController {
   ) {
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const checkIfEmailIsAlreadyRegistered = await this.usersService.findOne({
+    const checkIfEmailIsAlreadyRegistered = await this.userService.findOne({
       email,
     });
 
@@ -37,7 +37,7 @@ export class UsersController {
       throw new ConflictException('Email address already exists');
     }
 
-    const user = await this.usersService.create({
+    const user = await this.userService.create({
       name,
       email,
       password: hashedPassword,
@@ -54,7 +54,7 @@ export class UsersController {
     @Body('password') password: string,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const user = await this.usersService.findOne({ email });
+    const user = await this.userService.findOne({ email });
 
     if (!user) {
       throw new BadRequestException('Invalid credentials');
@@ -93,7 +93,7 @@ export class UsersController {
         throw new UnauthorizedException();
       }
 
-      const user = await this.usersService.findOne({ id: data['id'] });
+      const user = await this.userService.findOne({ id: data['id'] });
 
       delete user.password;
 

@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersController } from './users.controller';
-import { User } from './users.entity';
-import { UsersService } from './users.service';
+import { UserController } from './controller/user.controller';
+import { User } from './models/user.entity';
+import { UserService } from './service/user.service';
 
 @Module({
-  controllers: [UsersController],
+  controllers: [UserController],
   imports: [
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
@@ -14,6 +14,6 @@ import { UsersService } from './users.service';
       signOptions: { expiresIn: '1d' },
     }),
   ],
-  providers: [UsersService],
+  providers: [UserService],
 })
 export class UsersModule {}

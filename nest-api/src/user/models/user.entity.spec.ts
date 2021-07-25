@@ -1,4 +1,4 @@
-import { User } from './users.entity';
+import { User } from './user.entity';
 
 describe('User class', () => {
   it('should make a user with name, email and password', () => {
