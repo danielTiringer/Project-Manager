@@ -1,4 +1,5 @@
 import {
+  BeforeInsert,
   Entity,
   Column,
   PrimaryGeneratedColumn,
@@ -28,6 +29,11 @@ export class User {
 
   @UpdateDateColumn({ select: false })
   updated_at?: Date;
+
+  @BeforeInsert()
+  emailToLowerCase() {
+    this.email = this.email.toLowerCase();
+  }
 
   constructor(
     name: string,
