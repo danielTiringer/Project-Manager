@@ -1,24 +1,16 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { UserService } from 'src/user/service/user.service';
+import { UserService } from '../../user/service/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(private userService: UserService) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.findOne(email);
+    const user = await this.userService.findOneByEmail(email);
 
-    if (!user) {
-      throw new NotFoundException('The user was not found');
-    }
-
-    if (!this.comparePassword(password, user.password)) {
-      throw new BadRequestException('Invalid credentials');
+    if (!user || !this.comparePassword(password, user.password)) {
+      return null;
     }
 
     delete user.password;
