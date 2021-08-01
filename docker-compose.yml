@@ -53,6 +53,17 @@ services:
     networks:
       - project-manager
 
+  redis:
+    image: redis:6.2-alpine
+    container_name: ${PROJECT_NAME}-Cache
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    entrypoint: redis-server --appendonly yes
+    volumes:
+      - project-manager-cache:/data
+    networks:
+      - project-manager
+
   database:
     image: mysql:8
     container_name: ${PROJECT_NAME}-Database
@@ -91,3 +102,4 @@ networks:
 
 volumes:
   project-manager-data:
+  project-manager-cache:
