@@ -37,6 +37,8 @@ Containers created and their ports (if used) are as follows:
 - **nest**
 - **yarn**
 - **dev** - `:3000`
+- **database** - `:5432`
+- **redis** - `:6379`
 
 ### Troubleshooting
 
