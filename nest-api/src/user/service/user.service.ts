@@ -10,11 +10,11 @@ export class UserService {
   ) {}
 
   async findOneByEmail(email: string): Promise<User> {
-    return this.userRepository.findOneOrFail({ email: email });
+    return this.userRepository.findOne({ email: email });
   }
 
   async findOneById(id: number): Promise<User> {
-    return this.userRepository.findOneOrFail({ id: id });
+    return this.userRepository.findOne({ id: id });
   }
 
   async create(data: any): Promise<User> {
