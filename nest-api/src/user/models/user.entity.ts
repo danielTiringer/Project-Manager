@@ -1,14 +1,15 @@
 import {
-  BeforeInsert,
+  // BeforeInsert,
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { UserI } from './user.interface';
 
 @Entity('users')
-export class User {
+export class User implements UserI {
   @PrimaryGeneratedColumn()
   id: number;
 
