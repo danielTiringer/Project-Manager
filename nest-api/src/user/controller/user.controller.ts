@@ -1,25 +1,20 @@
 import {
+  Body,
+  ConflictException,
   Controller,
   Get,
   Post,
-  Body,
-  Req,
-  Res,
-  BadRequestException,
-  UnauthorizedException,
-  ConflictException,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
-import { Request, Response } from 'express';
+import { LocalAuthGuard } from '../../auth/guards/local-auth.guard';
+import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 
 @Controller()
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Post('register')
   async register(
@@ -29,11 +24,11 @@ export class UserController {
   ) {
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const checkIfEmailIsAlreadyRegistered = await this.userService.findOne({
+    const checkIfEmailIsAlreadyInUse = await this.userService.findOneByEmail(
       email,
-    });
+    );
 
-    if (checkIfEmailIsAlreadyRegistered) {
+    if (checkIfEmailIsAlreadyInUse) {
       throw new ConflictException('Email address already exists');
     }
 
@@ -47,59 +42,20 @@ export class UserController {
 
     return user;
   }
-
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(
-    @Body('email') email: string,
-    @Body('password') password: string,
-    @Res({ passthrough: true }) response: Response,
-  ) {
-    const user = await this.userService.findOne({ email });
-
-    if (!user) {
-      throw new BadRequestException('Invalid credentials');
-    }
-
-    if (!(await bcrypt.compare(password, user.password))) {
-      throw new BadRequestException('Invalid credentials');
-    }
-
-    const jwt = await this.jwtService.signAsync({ id: user.id });
-
-    response.cookie('jwt', jwt, { httpOnly: true });
-
-    return {
-      message: 'success',
-    };
+  async login(@Request() req) {
+    return req.user;
   }
 
   @Post('logout')
-  async logout(@Res({ passthrough: true }) response: Response) {
-    response.clearCookie('jwt');
-
-    return {
-      message: 'success',
-    };
+  async logout(@Request() req) {
+    req.logout();
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Get('user')
-  async user(@Req() request: Request) {
-    try {
-      const cookie = request.cookies['jwt'];
-
-      const data = await this.jwtService.verifyAsync(cookie);
-
-      if (!data) {
-        throw new UnauthorizedException();
-      }
-
-      const user = await this.userService.findOne({ id: data['id'] });
-
-      delete user.password;
-
-      return user;
-    } catch (e) {
-      throw new UnauthorizedException();
-    }
+  async user(@Request() req) {
+    return req.user;
   }
 }
