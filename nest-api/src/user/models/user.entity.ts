@@ -19,7 +19,7 @@ export class User implements UserI {
   @Column({ unique: true })
   email: string;
 
-  @Column({ length: 255, select: false })
+  @Column({ length: 255 })
   password: string;
 
   @Column({ default: true })
