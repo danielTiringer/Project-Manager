@@ -10,12 +10,12 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     UserModule,
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       host: 'database',
-      port: parseInt(process.env.MYSQL_PORT),
-      username: 'root',
-      password: process.env.MYSQL_ROOT_PASSWORD,
-      database: process.env.MYSQL_DATABASE,
+      port: parseInt(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
       entities: [User],
       synchronize: true,
     }),
