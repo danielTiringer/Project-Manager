@@ -39,13 +39,21 @@ describe('UserService', () => {
     expect(userService).toBeDefined();
   });
 
-  describe('findOneOrFail', () => {
+  describe('findOneByEmail', () => {
     it('should get a single user', () => {
       const repositorySpy = jest.spyOn(repository, 'findOneOrFail');
-      expect(
-        userService.findOne({ email: 'test@example.com' }),
-      ).resolves.toEqual(oneUser);
+      expect(userService.findOneByEmail('test@example.com')).resolves.toEqual(
+        oneUser,
+      );
       expect(repositorySpy).toBeCalledWith({ email: 'test@example.com' });
+    });
+  });
+
+  describe('findOneById', () => {
+    it('should get a single user', () => {
+      const repositorySpy = jest.spyOn(repository, 'findOneOrFail');
+      expect(userService.findOneById(1)).resolves.toEqual(oneUser);
+      expect(repositorySpy).toBeCalledWith({ id: 1 });
     });
   });
 
