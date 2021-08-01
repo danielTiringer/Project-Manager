@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
+import * as passport from 'passport';
 import * as redis from 'redis';
 import * as connectRedis from 'connect-redis';
 
@@ -35,6 +36,9 @@ async function bootstrap() {
       }),
     }),
   );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   await app.listen(process.env.API_PORT);
 }
