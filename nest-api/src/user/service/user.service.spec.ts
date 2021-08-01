@@ -41,7 +41,7 @@ describe('UserService', () => {
 
   describe('findOneByEmail', () => {
     it('should get a single user', () => {
-      const repositorySpy = jest.spyOn(repository, 'findOneOrFail');
+      const repositorySpy = jest.spyOn(repository, 'findOne');
       expect(userService.findOneByEmail('test@example.com')).resolves.toEqual(
         oneUser,
       );
@@ -51,7 +51,7 @@ describe('UserService', () => {
 
   describe('findOneById', () => {
     it('should get a single user', () => {
-      const repositorySpy = jest.spyOn(repository, 'findOneOrFail');
+      const repositorySpy = jest.spyOn(repository, 'findOne');
       expect(userService.findOneById(1)).resolves.toEqual(oneUser);
       expect(repositorySpy).toBeCalledWith({ id: 1 });
     });
