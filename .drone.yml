@@ -1,25 +1,53 @@
 kind: pipeline
-name: project-manager
+type: docker
+name: user-client
 
 steps:
-- name: user-client
+- name: dependency install
   image: node:16-alpine
   commands:
     - cd user-client
     - yarn install
-    - yarn run lint
-    - yarn run test --watchAll=false
   volumes:
     - name: user-client-cache
       path: /drone/src/user-client/node_modules
 
-- name: user-api
+- name: lint
+  image: node:16-alpine
+  commands:
+    - cd user-client
+    - yarn run lint
+    - yarn run test --watchAll=false
+
+- name: test
+  image: node:16-alpine
+  commands:
+    - cd user-client
+    - yarn run test --watchAll=false
+
+---
+kind: pipeline
+type: docker
+name: user-api
+
+steps:
+- name: dependency install
   image: node:16-alpine
   commands:
     - cd user-api
     - yarn install
-    - yarn run lint
-    - yarn run test
   volumes:
     - name: user-api-cache
       path: /drone/src/user-api/node_modules
+
+- name: lint
+  image: node:16-alpine
+  commands:
+    - cd user-api
+    - yarn run lint
+
+- name: test
+  image: node:16-alpine
+  commands:
+    - cd user-api
+    - yarn run test
