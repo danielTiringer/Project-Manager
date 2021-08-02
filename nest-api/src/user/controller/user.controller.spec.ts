@@ -45,11 +45,9 @@ describe('UsersController', () => {
   });
 
   describe('register', () => {
-    it('should check if the email already exists', async () => {
+    it('should attempt to get a user by email', async () => {
       const serviceSpy = jest.spyOn(userService, 'findOneByEmail');
-      expect(
-        userController.register(testName, testEmail, testPassword),
-      ).resolves.toEqual(oneUser);
+      await userController.register(testName, testEmail, testPassword);
       expect(serviceSpy).toHaveBeenCalledWith(testEmail);
     });
   });
