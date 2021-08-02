@@ -4,7 +4,7 @@ services:
   yarn:
     container_name: ${PROJECT_NAME}-Yarn
     build:
-      context: ./nest-api
+      context: ./user-api
       dockerfile: ../docker/node/Dockerfile
       args:
         NODE_VERSION: ${NODE_VERSION}
@@ -12,14 +12,14 @@ services:
     env_file: .env
     entrypoint: yarn
     volumes:
-      - ./nest-api:/src
+      - ./user-api:/src
     networks:
       - project-manager
 
   nest:
     container_name: ${PROJECT_NAME}-Nest
     build:
-      context: ./nest-api
+      context: ./user-api
       dockerfile: ../docker/node/Dockerfile
       args:
         NODE_VERSION: ${NODE_VERSION}
@@ -27,14 +27,14 @@ services:
     env_file: .env
     entrypoint: nest
     volumes:
-      - ./nest-api:/src
+      - ./user-api:/src
     networks:
       - project-manager
 
   dev:
     container_name: ${PROJECT_NAME}-Nest-Dev-Server
     build:
-      context: ./nest-api
+      context: ./user-api
       dockerfile: ../docker/node/Dockerfile
       args:
         NODE_VERSION: ${NODE_VERSION}
@@ -49,7 +49,7 @@ services:
     entrypoint: yarn
     command: run start:dev
     volumes:
-      - ./nest-api:/src
+      - ./user-api:/src
     networks:
       - project-manager
 
