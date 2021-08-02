@@ -18,6 +18,7 @@ jest.mock('bcrypt');
 describe('UsersController', () => {
   let userController: UserController;
   let userService: UserService;
+  const findByEmail = jest.fn();
 
   const bcryptHash = jest.fn().mockReturnValue(hashedPassword);
   (bcrypt.hash as jest.Mock) = bcryptHash;
@@ -29,7 +30,7 @@ describe('UsersController', () => {
         {
           provide: UserService,
           useValue: {
-            findOneByEmail: jest.fn().mockResolvedValue(null),
+            findOneByEmail: findByEmail,
             create: jest.fn().mockResolvedValue(oneUser),
           },
         },
@@ -49,6 +50,26 @@ describe('UsersController', () => {
       const serviceSpy = jest.spyOn(userService, 'findOneByEmail');
       await userController.register(testName, testEmail, testPassword);
       expect(serviceSpy).toHaveBeenCalledWith(testEmail);
+    });
+    describe('and the email is not used yet', () => {
+      beforeEach(() => {
+        findByEmail.mockReturnValue(undefined);
+      });
+      it('should return the user', async () => {
+        await expect(
+          userController.register(testName, testEmail, testPassword),
+        ).resolves.toEqual(oneUser);
+      });
+    });
+    describe('and the email is already used', () => {
+      beforeEach(() => {
+        findByEmail.mockReturnValue(oneUser);
+      });
+      it('should throw an error', async () => {
+        await expect(
+          userController.register(testName, testEmail, testPassword),
+        ).rejects.toThrow();
+      });
     });
   });
 });
