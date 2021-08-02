@@ -22,8 +22,6 @@ export class UserController {
     @Body('email') email: string,
     @Body('password') password: string,
   ) {
-    const hashedPassword = await bcrypt.hash(password, 12);
-
     const checkIfEmailIsAlreadyInUse = await this.userService.findOneByEmail(
       email,
     );
@@ -31,6 +29,8 @@ export class UserController {
     if (checkIfEmailIsAlreadyInUse) {
       throw new ConflictException('Email address already exists');
     }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = await this.userService.create({
       name,
