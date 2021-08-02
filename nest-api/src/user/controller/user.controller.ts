@@ -10,7 +10,7 @@ import {
 import { UserService } from '../service/user.service';
 import * as bcrypt from 'bcrypt';
 import { LocalAuthGuard } from '../../auth/guards/local-auth.guard';
-import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
+import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
 
 @Controller()
 export class UserController {
