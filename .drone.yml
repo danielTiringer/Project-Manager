@@ -5,13 +5,19 @@ steps:
 - name: user-client
   image: node:16-alpine
   commands:
-  - cd user-client
-  - yarn run test --watchAll=false
+    - cd user-client
+    - yarn run test --watchAll=false
+  volumes:
+    - name: user-client-cache
+      path: /drone/src/user-client/node_modules
 
 - name: user-api
   image: node:16-alpine
   commands:
-  - cd user-api
-  - yarn install
-  - yarn run lint
-  - yarn run test
+    - cd user-api
+    - yarn install
+    - yarn run lint
+    - yarn run test
+  volumes:
+    - name: user-api-cache
+      path: /drone/src/user-api/node_modules
