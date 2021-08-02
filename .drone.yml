@@ -1,21 +1,17 @@
 kind: pipeline
-name: user-api
+name: project-manager
 
 steps:
-- name: install
+- name: user-client
+  image: node:16-alpine
+  commands:
+  - cd user-client
+  - yarn run test --watchAll=false
+
+- name: user-api
   image: node:16-alpine
   commands:
   - cd user-api
   - yarn install
-
-- name: lint
-  image: node:16-alpine
-  commands:
-  - cd user-api
   - yarn run lint
-
-- name: test
-  image: node:16-alpine
-  commands:
-  - cd user-api
   - yarn run test
