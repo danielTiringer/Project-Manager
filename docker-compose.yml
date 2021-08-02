@@ -1,8 +1,43 @@
 version: '3.8'
 
 services:
-  yarn:
-    container_name: ${PROJECT_NAME}-Yarn
+  react-yarn:
+    container_name: ${PROJECT_NAME}-React-Yarn
+    build:
+      context: ./user-client
+      dockerfile: ../docker/node/Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+      target: yarn
+    env_file: .env
+    entrypoint: yarn
+    volumes:
+      - ./user-client:/src
+    networks:
+      - project-manager
+
+  react-dev:
+    container_name: ${PROJECT_NAME}-React-Dev-Server
+    build:
+      context: ./user-client
+      dockerfile: ../docker/node/Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+      target: yarn
+    env_file: .env
+    depends_on:
+      - nest-dev
+    ports:
+      - 3000:3000
+    entrypoint: yarn
+    command: start
+    volumes:
+      - ./user-client:/src
+    networks:
+      - project-manager
+
+  nest-yarn:
+    container_name: ${PROJECT_NAME}-Nest-Yarn
     build:
       context: ./user-api
       dockerfile: ../docker/node/Dockerfile
@@ -16,8 +51,8 @@ services:
     networks:
       - project-manager
 
-  nest:
-    container_name: ${PROJECT_NAME}-Nest
+  nest-nest:
+    container_name: ${PROJECT_NAME}-Nest-CLI
     build:
       context: ./user-api
       dockerfile: ../docker/node/Dockerfile
@@ -31,7 +66,7 @@ services:
     networks:
       - project-manager
 
-  dev:
+  nest-dev:
     container_name: ${PROJECT_NAME}-Nest-Dev-Server
     build:
       context: ./user-api

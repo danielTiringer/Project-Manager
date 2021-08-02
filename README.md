@@ -34,9 +34,9 @@ Additional commands can be run with Nest and Yarn. Some examples are shown below
 
 Containers created and their ports (if used) are as follows:
 
-- **nest**
-- **yarn**
-- **dev** - `:3000`
+- **nest-nest**
+- **nest-yarn**
+- **nest-dev** - `:3001`
 - **database** - `:5432`
 - **redis** - `:6379`
 
