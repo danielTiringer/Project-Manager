@@ -6,6 +6,7 @@ steps:
   image: node:16-alpine
   commands:
     - cd user-client
+    - yarn install
     - yarn run test --watchAll=false
   volumes:
     - name: user-client-cache
