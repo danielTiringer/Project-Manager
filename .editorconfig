@@ -2,7 +2,7 @@
 root = true
 
 # 2 space indentation
-[*.ts]
+[*.ts,*.tsx]
 indent_style = space
 indent_size = 2
 
