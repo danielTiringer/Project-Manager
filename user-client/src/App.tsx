@@ -5,6 +5,7 @@ import AdminPage from './Pages/AdminPage';
 import HomePage from './Pages/HomePage';
 import Login from './Pages/Login';
 import Profile from './Pages/Profile';
+import './main.css';
 
 function App(): JSX.Element {
   return (
