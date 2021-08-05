@@ -6,17 +6,20 @@ import HomePage from './Pages/HomePage';
 import Login from './Pages/Login';
 import Profile from './Pages/Profile';
 import './main.css';
+import UserContext from './Context/UserContext';
 
 function App(): JSX.Element {
   return (
     <BrowserRouter>
-      <NavBar />
-      <Switch>
-        <Route path="/" exact component={HomePage}></Route>
-        <Route path="/admin" component={AdminPage}></Route>
-        <Route path="/login" component={Login}></Route>
-        <Route path="/profile" component={Profile}></Route>
-      </Switch>
+      <UserContext>
+        <NavBar />
+        <Switch>
+          <Route path="/" exact component={HomePage}></Route>
+          <Route path="/admin" component={AdminPage}></Route>
+          <Route path="/login" component={Login}></Route>
+          <Route path="/profile" component={Profile}></Route>
+        </Switch>
+      </UserContext>
     </BrowserRouter>
   );
 }
