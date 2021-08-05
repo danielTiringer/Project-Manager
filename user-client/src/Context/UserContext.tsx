@@ -5,13 +5,14 @@ import React, {
   useState,
 } from 'react';
 import axios from 'axios';
+import { UserType } from '../Types/UserType';
 
-export const userContext = createContext<any>({});
+export const userContext = createContext<UserType | undefined>({});
 
 export default function UserContext(
   props: PropsWithChildren<any>,
 ): JSX.Element {
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<UserType | undefined>();
 
   useEffect(() => {
     axios

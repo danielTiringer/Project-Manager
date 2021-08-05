@@ -13,7 +13,9 @@ export default function Login(): JSX.Element {
         { withCredentials: true },
       )
       .then((res) => {
-        console.log(res.data);
+        if (res.status === 201) {
+          window.location.href = '/';
+        }
       });
   };
 
