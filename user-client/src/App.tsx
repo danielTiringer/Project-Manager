@@ -7,6 +7,7 @@ import Login from './Pages/Login';
 import Profile from './Pages/Profile';
 import './main.css';
 import UserContext from './Context/UserContext';
+import Register from './Pages/Register';
 
 function App(): JSX.Element {
   return (
@@ -18,6 +19,7 @@ function App(): JSX.Element {
           <Route path="/admin" component={AdminPage}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/profile" component={Profile}></Route>
+          <Route path="/register" component={Register}></Route>
         </Switch>
       </UserContext>
     </BrowserRouter>
