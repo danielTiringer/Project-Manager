@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders navbar', () => {
   render(<App />);
-  const navbar = screen.getByText(/Logout/i);
+  const navbar = screen.getByText(/Login/i);
   expect(navbar).toBeInTheDocument();
 });
