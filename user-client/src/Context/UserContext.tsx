@@ -21,6 +21,9 @@ export default function UserContext(
       })
       .then((res) => {
         setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
