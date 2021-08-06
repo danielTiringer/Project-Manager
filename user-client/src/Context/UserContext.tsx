@@ -10,7 +10,7 @@ import { UserType } from '../Types/UserType';
 export const userContext = createContext<UserType | undefined>({});
 
 export default function UserContext(
-  props: PropsWithChildren<any>,
+  props: PropsWithChildren<UserType>,
 ): JSX.Element {
   const [user, setUser] = useState<UserType | undefined>();
 
