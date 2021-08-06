@@ -2,6 +2,7 @@ import {
   Body,
   ConflictException,
   Controller,
+  Delete,
   Get,
   Post,
   Request,
@@ -57,5 +58,11 @@ export class UserController {
   @Get('user')
   async user(@Request() req) {
     return req.user;
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Delete('user')
+  async delete(@Request() req) {
+    await this.userService.delete(req.body.id);
   }
 }
