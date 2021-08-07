@@ -49,6 +49,7 @@ export class UserController {
     return req.user;
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Get('logout')
   async logout(@Request() req) {
     req.logout();
