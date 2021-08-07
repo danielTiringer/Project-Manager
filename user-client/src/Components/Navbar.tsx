@@ -12,7 +12,6 @@ export default function NavBar(): JSX.Element {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           window.location.href = '/';
         }
