@@ -27,26 +27,26 @@ steps:
 ---
 kind: pipeline
 type: docker
-name: user-api
+name: api
 
 steps:
 - name: build
   image: node:16-alpine
   commands:
-    - cd user-api
+    - cd api
     - yarn install
   volumes:
-    - name: user-api-cache
-      path: /drone/src/user-api/node_modules
+    - name: api-cache
+      path: /drone/src/api/node_modules
 
 - name: lint
   image: node:16-alpine
   commands:
-    - cd user-api
+    - cd api
     - yarn run lint
 
 - name: test
   image: node:16-alpine
   commands:
-    - cd user-api
+    - cd api
     - yarn run test

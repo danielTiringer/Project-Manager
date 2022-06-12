@@ -5,6 +5,7 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 import * as redis from 'redis';
 import * as connectRedis from 'connect-redis';
+import { generateClient } from '../generate-client-options';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -39,6 +40,7 @@ async function bootstrap() {
 
   app.use(passport.initialize());
   app.use(passport.session());
+  await generateClient(app);
 
   await app.listen(process.env.API_PORT);
 }
