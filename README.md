@@ -30,13 +30,11 @@ From the repository's root run `docker-compose up -d --build`. Open up your brow
 
 Additional commands can be run with Nest and Yarn. Some examples are shown below.
 
-- `docker-compose run --rm yarn add -D nodemon`
+- `docker-compose run --rm nest yarn add -D nodemon`
 
 Containers created and their ports (if used) are as follows:
 
-- **nest-nest**
-- **nest-yarn**
-- **nest-dev** - `:3001`
+- **nest** - `:3001`
 - **database** - `:5432`
 - **redis** - `:6379`
 

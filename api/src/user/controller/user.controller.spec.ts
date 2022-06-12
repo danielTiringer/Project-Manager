@@ -1,6 +1,6 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { User } from '../models/user.entity';
-import { UserController } from './user.controller';
+import {Test, TestingModule} from '@nestjs/testing';
+import {User} from '../models/user.entity';
+import {UserController} from './user.controller';
 import { UserService } from '../service/user.service';
 import * as bcrypt from 'bcrypt';
 
@@ -20,8 +20,7 @@ describe('UsersController', () => {
   let userService: UserService;
   const findByEmail = jest.fn();
 
-  const bcryptHash = jest.fn().mockReturnValue(hashedPassword);
-  (bcrypt.hash as jest.Mock) = bcryptHash;
+  (bcrypt.hash as jest.Mock) = jest.fn().mockReturnValue(hashedPassword);
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
