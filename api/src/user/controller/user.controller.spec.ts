@@ -1,6 +1,6 @@
-import {Test, TestingModule} from '@nestjs/testing';
-import {User} from '../models/user.entity';
-import {UserController} from './user.controller';
+import { Test, TestingModule } from '@nestjs/testing';
+import { User } from '../models/user.entity';
+import { UserController } from './user.controller';
 import { UserService } from '../service/user.service';
 import * as bcrypt from 'bcrypt';
 
